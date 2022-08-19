@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'expenses.dart';
+import './expense_variable_list.dart';
 
 void main() => runApp(const MyApp());
 
@@ -8,7 +8,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter App',
       home: MyHomePage(),
     );
@@ -16,10 +16,9 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  final List<Expenses> exp = [
-    Expenses(id: "t", date: DateTime.now(), title: "Shirts", amount: 70.7),
-  ];
+  const MyHomePage({Key? key}) : super(key: key);
 
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,52 +36,7 @@ class MyHomePage extends StatelessWidget {
                 child: Text("CHART"),
               ),
             ),
-            Column(
-              children: exp.map((e) {
-                return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 7),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.purple,
-                            width: 3,
-                          ),
-                        ),
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                        child: Text(
-                          e.amount.toString(),
-                          style: const TextStyle(
-                              color: Colors.purple,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 25),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            e.title,
-                            style: const TextStyle(
-                                color: Colors.green,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                          Text(
-                            e.date.toString(),
-                            style: const TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                );
-              }).toList(),
-            )
+            const HomepageListAndInput(),
           ],
         ));
   }

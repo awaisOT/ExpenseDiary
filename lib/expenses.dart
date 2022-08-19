@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-
 class Expenses {
   final double amount;
   final String id;
