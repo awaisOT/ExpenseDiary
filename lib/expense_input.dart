@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
-class ExpenseInput extends StatelessWidget {
-  VoidCallback func;
+class ExpenseInput extends StatefulWidget {
+  Function(String,double) func;
 
+
+  ExpenseInput(this.func, {Key? key}) : super(key: key);
+
+  @override
+  State<ExpenseInput> createState() => _ExpenseInputState();
+}
+
+class _ExpenseInputState extends State<ExpenseInput> {
   var titleController = TextEditingController();
+
   var amountController = TextEditingController();
-  ExpenseInput(this.func);
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +35,11 @@ class ExpenseInput extends StatelessWidget {
                 labelText: "Purchase Amount",
               ),
               controller: amountController,
+              keyboardType: TextInputType.number,
             ),
             TextButton(
               onPressed: () {
-                func(titleController.text, )
+                widget.func(titleController.text, double.parse(amountController.text) );
               },
               child: const Text("Save Data"),
             ),
