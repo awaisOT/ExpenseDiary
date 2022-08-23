@@ -2,6 +2,7 @@ import 'package:expense/expense_input.dart';
 import 'package:flutter/material.dart';
 import './transaction_list.dart';
 import './expenses.dart';
+import './chart.dart';
 
 void main() => runApp( MyApp());
 
@@ -28,17 +29,23 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
      final List<Expenses> expr = [
-    //Expenses(id: "t", date: DateTime.now(), title: "Shirts", amount: 70.7),
-    //Expenses(id: "t", date: DateTime.now(), title: "Trouser", amount: 52.4),
+    Expenses(id: "t", date: DateTime.now(), title: "Shirts", amount: 70.7),
+    Expenses(id: "t", date: DateTime.now(), title: "Trouser", amount: 52.4),
   ];
 
-  void addtx(String txTitle, double txamount) {
+  List<Expenses> get rDays{
+    return expr.where( (tx) {
+      return tx.date.isAfter(DateTime.now().subtract( const Duration(days: 7)));}).toList();
+    }
+  
+
+  void addtx(String txTitle, double txamount, DateTime slecteddate) {
     if(txTitle.isEmpty || txamount<=0){
       return;
     }
     final newExp = Expenses(
         amount: txamount,
-        date: DateTime.now(),
+        date: slecteddate,
         id: DateTime.now().toString(),
         title: txTitle);
     setState(() {
@@ -52,6 +59,8 @@ class _MyHomePageState extends State<MyHomePage> {
       return (GestureDetector(behavior: HitTestBehavior.opaque,child: ExpenseInput(addtx),));
     });
   }
+  
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               Container(
                 width: double.infinity,
-                child: const Card(
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  child: Text("CHART"),
-                ),
+                child: CHART(rDays)
               ),
               TransactionList(expr),
             ],
